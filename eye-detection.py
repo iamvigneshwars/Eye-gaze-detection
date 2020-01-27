@@ -14,9 +14,13 @@ while True:
     faces = detector(gray)
 
     for face in faces:
-        x, y = face.left(), face.top()
-        x1, y1 = face.right(), face.bottom()
-        cv2.rectangle(frame, (x, y), (x1, y1), (0, 255, 0), 2)
+        landmarks = predictor(gray, face)
+        for i in range(36, 48):
+            x = landmarks.part(i).x
+            y = landmarks.part(i).y
+            cv2.circle(frame, (x, y), 1, (0,250,0), 1)
+
+        print(landmarks)
     cv2.imshow("Frame", frame)
     
     key = cv2.waitKey(1)
